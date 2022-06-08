@@ -1,4 +1,4 @@
-FROM node:13 AS testing
+FROM node:12.18.3 AS testing
 WORKDIR /app
 RUN apt-get update && apt-get install sudo nano
 COPY . .
