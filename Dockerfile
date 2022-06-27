@@ -1,6 +1,6 @@
 FROM node:12.18.3 AS 4sight
 WORKDIR /app
-RUN apt-get update && apt-get install sudo nano
+RUN apt-get update && apt-get install sudo nano vim
 COPY . .
 RUN adduser node sudo
 RUN echo '%node ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
