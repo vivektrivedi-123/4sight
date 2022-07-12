@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: nginx
+  annotations:
+    metallb.universe.tf/address-pool: nginx
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  type: LoadBalancer
+  selector:
+      type: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: nginx
+  labels:
+    type: nginx
+
+spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        type: nginx
+    template:
+      metadata:
+        name: nginx-pod
+        labels:
+          type: nginx
+      spec:
+        containers:
+         - name: nginx
+           image: nginx
