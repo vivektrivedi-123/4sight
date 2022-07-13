@@ -1,4 +1,4 @@
-FROM node:12.18.3 AS dev
+FROM node:12.18.3 AS development
 WORKDIR /app
 RUN apt-get update && apt-get install sudo nano vim -y
 COPY . .
@@ -10,7 +10,7 @@ RUN sudo chown -R 1000:1000 build
 
 FROM nginx:latest
 WORKDIR /usr/share/nginx/html
-COPY --from=dev /app/build .
+COPY --from=development /app/build .
 COPY start.sh .
 RUN chmod +x start.sh
 ENTRYPOINT sh start.sh && bash
