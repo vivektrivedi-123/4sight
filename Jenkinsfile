@@ -24,31 +24,32 @@ pipeline{
                 sudo npm i
                 sudo npm run build
                 sudo zip -r build.zip build
-                echo "this is testing purpose."
                 sudo chown -R 1000:1000 *
                 '''
             }
         }
         stage('Artifacts'){
             steps{
-                archiveArtifacts 'build.tar'
+                archiveArtifacts 'build.zip'
             }
         }
     }
     post{
         failure{
-            emailext attachLog: true, body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-Changes     :   $GIT_CHANGE_ID
-Branch      :   $GIT_BRANCH
-URL         :   $GIT_CHANGE_URL
-Please find the attachement. ''', compressLog: true, subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS', to: 'sample@gmail.com'
+            emailext attachLog: true, body:'''
+Please find the attachments.
+
+
+Regards,
+Jenkins Admin''', compressLog: true, subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'jenkinspedia@gmail.com'
         }
         success{
-            emailext attachmentPatterns: 'build.zip', body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
-Changes     :   $GIT_CHANGE_ID
-Branch      :   $GIT_BRANCH
-URL         :   $GIT_CHANGE_URL
-Plesae find the attachment. ''', compressLog: false, subject: '$PROJECT_NAME - Build # $BUILD_NUBMER - $BUILD_STATUS', to: 'sample@gmail.com'
+            emailext attachmentPatterns: 'build.zip', body: '''
+Plesae find the attachments. 
+
+
+Regards,
+Jenkins Admin''', compressLog: false, subject: '$PROJECT_NAME - Build # $BUILD_NUBMER - $BUILD_STATUS', to: 'jenkinspedia@gmail.com'
         }
     }
 }
