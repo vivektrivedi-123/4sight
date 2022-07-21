@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label '<docker_node>'
+        label '<docker_system>'
     }
     options{
         timestamps ()
